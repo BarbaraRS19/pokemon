@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import './pokemon.css'
 
 export default function Pokemon(){
 
@@ -15,23 +16,40 @@ const fetchData = async () => {
 }
     useEffect(() =>{
 fetchData()
-    }, [id])
+    }, [id,])
 
     const nextPokemon = () => {
         setId(id + 1)
     }
+    const previousPokemon = () => {
+        setId(id - 1)
+    }
     return(
-        <div>
+        <div className="pokebola">
 
             {pokemon && (
                     <div className="pokemon">
-                         <h1>Pokémon</h1>
-                        <p>{pokemon.name}</p>
-                        <p> Peso: {pokemon.weight}g</p>
+                         <h1 class="gradient">Pokémon</h1>
+                         <div className="poke">
+                        <p>#{pokemon.id}</p>
+                        <p>{pokemon.weight}g</p>
+                        <div className="tipo">
+                        {pokemon.types.map((type, index) => (
+                        <p key={index}>{type.type.name}</p>
+                        ))}
+                        </div>
+                        </div>
+                        <p class="gradiente">{pokemon.name}</p>
+                        <div className="image">
                         <img src={pokemon.sprites.front_default} alt="Pokemon" />
-                        <button onClick={nextPokemon}>Próximo</button>
+                        </div>
                     </div>
+                    
                 )}
+                <div  className="botao">
+                <button onClick={previousPokemon}>Anterior</button>
+                <button onClick={nextPokemon}>Próximo</button>
+                </div>
         </div>
     )
 }
